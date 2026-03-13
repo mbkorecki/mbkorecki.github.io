@@ -1,92 +1,58 @@
-<!-- Academic Personal Website with Solid Hover Abstracts, Clickable Publications -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marcin Korecki</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-<script src="https://unpkg.com/globe.gl"></script>
+<script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"></script>
+
 <style>
 :root{--accent:#1f4c7a;--bg:#ffffff;--text:#1f2933;--muted:#6b7280;--card:#f6f8fb}
-body.dark{--bg:#0f172a;--text:#e5e7eb;--muted:#9ca3af;--card:#1e293b}
-body{font-family:Inter,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}
-.container{max-width:900px;margin:auto;padding:70px 28px}
+body{font-family:Inter,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.7}
+.container{max-width:900px;margin:auto;padding:55px 28px}
 nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid #e5e7eb;z-index:100}
-nav .nav-inner{max-width:1000px;margin:auto;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
+nav .nav-inner{max-width:1000px;margin:auto;padding:18px 28px;display:flex;justify-content:space-between}
 nav a{margin-left:22px;text-decoration:none;color:var(--text);font-size:15px}
-.toggle{cursor:pointer;border:1px solid #ccc;padding:4px 8px;border-radius:4px;font-size:12px}
-.hero{padding-top:70px;padding-bottom:30px}
+.hero{position:relative}
+#miniGlobe{position:absolute;right:0;top:10px;width:220px;height:220px;z-index:5}
 h1{font-size:42px;margin-bottom:6px}
 .subtitle{font-size:19px;color:var(--muted);margin-bottom:18px}
-.statement{margin-top:25px;padding:20px;border-left:4px solid var(--accent);background:var(--card);border-radius:6px;font-size:15px}
-.buttons a{text-decoration:none;border:1px solid var(--accent);padding:8px 16px;margin-right:10px;color:var(--accent);font-size:14px;border-radius:4px}
-.buttons a:hover{background:var(--accent);color:white}
-section{margin-top:70px}
+.statement{margin-top:18px;padding:18px;border-left:4px solid var(--accent);background:var(--card);border-radius:6px;font-size:15px}
+section{margin-top:50px}
 h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
 .card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}
-.paper{margin-bottom:16px;position:relative;border:1px solid #e5e7eb;padding:10px;border-radius:6px;transition:transform .2s;background:var(--card);z-index:5}
-.paper:hover{transform:scale(1.02)}
-.paper-title{font-weight:600}
-.paper a{text-decoration:none;color:var(--accent)}
-.paper a:hover{text-decoration:underline}
-.abstract{font-size:14px;color:var(--text);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:12px;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.25);transition:opacity .25s;z-index:100}
-.paper:hover .abstract{opacity:1;pointer-events:auto}
-.timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}
-.timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}
-.timeline-item.visible{opacity:1;transform:translateY(0)}
+.paper{margin-bottom:14px;border:1px solid #e5e7eb;padding:12px;border-radius:6px;background:var(--card);position:relative}
+.paper-title a{font-weight:600;text-decoration:none;color:var(--accent)}
+.paper-title a:hover{text-decoration:underline}
+.abstract{position:absolute;left:0;top:100%;width:100%;background:#ffffff;border:1px solid #ddd;border-radius:6px;padding:14px;box-shadow:0 10px 25px rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:9999}
+.paper:hover .abstract{opacity:1}
+.timeline{margin-top:20px;padding-left:22px;border-left:2px solid #e5e7eb}
+.timeline-item{margin-bottom:22px}
 .timeline-year{font-weight:600;color:var(--accent)}
-/*#topic-network{height:420px;border:1px solid #e5e7eb;border-radius:8px}*/
-#globeViz{height:520px}
-.news-list{list-style:none;padding:0}
-footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}
+footer{margin-top:70px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}
 </style>
 </head>
-<body>
 
+<body>
 <nav>
 <div class="nav-inner">
 <div><strong>Marcin Korecki</strong></div>
-<div>
-<a href="#research">Research</a>
-<!-- <a href="#topics">Topics</a> -->
-<a href="#publications">Publications</a>
-<a href="#timeline">Timeline</a>
-<a href="#globe">Globe</a>
-<a href="#news">News</a>
-<span class="toggle" onclick="toggleTheme()">theme</span>
-</div>
+<div><a href="#research">Research</a><a href="#timeline">Timeline</a><a href="#publications">Publications</a></div>
 </div>
 </nav>
 
 <div class="container hero">
+<div id="miniGlobe"></div>
 <h1>Marcin Korecki</h1>
 <div class="subtitle">AI · Complex Systems · Socio-Technical Systems</div>
-<div class="buttons">
-<a href="https://scholar.google.com/citations?user=boCYnOcAAAAJ">Google Scholar</a>
-<a href="mailto:mbkorecki@gmail.com">Email</a>
-</div>
-<div class="statement">
-<strong>Research Statement.</strong>
-My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior, governance, and large-scale coordination. A central goal of my work is developing AI systems that remain robust, transparent, and socially aligned when deployed in real-world socio-technical environments.
-</div>
-<div id="scholar-stats" style="margin-top:0"></div>
+<div class="statement"><strong>Research Statement.</strong> My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior and governance.</div>
+<div id="scholar-stats"></div>
 </div>
 
 <div class="container">
-
-<!--
-<section id="citations">
-<h2>Citation Growth</h2>
-<canvas id="citationChart" height="120"></canvas>
-</section>
--->
-
 <section id="research">
 <h2>Research</h2>
 <div class="grid">
@@ -94,18 +60,6 @@ My research investigates how artificial intelligence interacts with complex soci
 <div class="card"><h3>AI Governance</h3><p>Transparency, fairness, and governance of algorithmic systems.</p></div>
 <div class="card"><h3>Collective Intelligence</h3><p>Human-AI collaboration in distributed decision environments.</p></div>
 </div>
-</section>
-
-<!--
-<section id="topics">
-<h2>Research Topic Network</h2>
-<div id="topic-network"></div>
-</section>
--->
-
-<section id="publications">
-<h2>Publications</h2>
-<div id="pub-list"></div>
 </section>
 
 <section id="timeline">
@@ -120,66 +74,42 @@ My research investigates how artificial intelligence interacts with complex soci
 </div>
 </section>
 
-<section id="globe">
-<h2>Global Research Trajectory</h2>
-<div id="globeViz"></div>
-</section>
-
-<section id="news">
-<h2>News</h2>
-<ul class="news-list">
-<li>2025 — SNF Postdoc.Mobility Fellowship</li>
-<li>2024 — Invited talk EuroScience Open Forum</li>
-<li>2023 — PhD ETH Zurich</li>
-</ul>
+<section id="publications">
+<h2>Publications</h2>
+<div id="pub-list"></div>
 </section>
 
 <footer>© Marcin Korecki</footer>
+
 </div>
-
 <script>
-function toggleTheme(){document.body.classList.toggle("dark")}
-
-async function loadScholarStats(){
- try{
-  const res = await fetch('scholar-stats.json');
-  const data = await res.json();
-  document.getElementById('scholar-stats').innerHTML = `<div style="font-size:15px"><strong>${data.citations}</strong> citations · <strong>${data.hindex}</strong> h-index · <strong>${data.i10index}</strong> i10-index</div>`;
- }catch(e){console.log('Scholar stats not loaded')}
-}
+async function loadScholarStats(){try{const res=await fetch('scholar-stats.json');const data=await res.json();document.getElementById('scholar-stats').innerHTML=`<div style="margin-top:6px;font-size:15px"><strong>${data.citations}</strong> citations · <strong>${data.hindex}</strong> h-index · <strong>${data.i10index}</strong> i10-index</div>`;}catch(e){console.log('Scholar stats not loaded')}}
 loadScholarStats();
 
-async function loadPublications(){
-  try{
-    const res = await fetch("publications.json");
-    const papers = await res.json();
-    const container = document.getElementById("pub-list");
-    container.innerHTML = "";
-    papers.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "paper";
-      div.innerHTML = `
-        <div class="paper-title"><a href="${p.pub_url}" target="_blank">${p.title}</a></div>
-        <div class="abstract" style="background: var(--card);"> <strong>Authors:</strong> ${p.authors}<br><strong>Venue:</strong> ${p.venue} (${p.year})<br>${p.abstract ? p.abstract : ""}</div>
-      `;
-      container.appendChild(div);
-    });
-  } catch(e){ console.log("Failed to load publications:", e); }
-}
+async function loadPublications(){try{const res=await fetch('publications.json');const papers=await res.json();const container=document.getElementById('pub-list');container.innerHTML='';papers.sort((a,b)=>b.year-a.year);papers.forEach(p=>{const div=document.createElement('div');div.className='paper';div.innerHTML=`<div class="paper-title"><a href="${p.pub_url}" target="_blank">${p.title}</a></div><div class="abstract"><strong>Authors:</strong> ${p.authors}<br>${p.abstract || ''}</div>`;container.appendChild(div)})}catch(e){console.log('pub load error',e)}}
 loadPublications();
 
-/* Topic network commented out */
+window.addEventListener('load',()=>{
+const container=document.getElementById('miniGlobe');
+if(!container)return;
+const globe=Globe()(container).width(220).height(220).globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg').backgroundColor('rgba(0,0,0,0)').globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg');
 
-const items=document.querySelectorAll('.timeline-item');
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})});
-items.forEach(i=>observer.observe(i));
+const places=[
+{lat:52.0116,lng:4.3571},{lat:47.3769,lng:8.5417},{lat:55.9533,lng:-3.1883},{lat:53.2194,lng:6.5665},{lat:35.6762,lng:139.6503}
+];
 
-const globe=Globe()(document.getElementById('globeViz')).globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg').backgroundColor('rgba(0,0,0,0)');
-const places=[{name:"Netherlands",lat:52.0116,lng:4.3571},{name:"Switzerland",lat:47.3769,lng:8.5417},{name:"United Kingdom",lat:55.9533,lng:-3.1883},{name:"Netherlands (Groningen)",lat:53.2194,lng:6.5665},{name:"Japan",lat:35.6762,lng:139.6503}];
-const arcs=[];for(let i=0;i<places.length-1;i++){arcs.push({startLat:places[i].lat,startLng:places[i].lng,endLat:places[i+1].lat,endLng:places[i+1].lng});}
-globe.arcsData(arcs).arcColor(()=>'#ff6b3d').arcStroke(3).arcDashLength(0.6).arcDashGap(0.6).arcDashAnimateTime(1800);
-globe.pointsData(places).pointLat(d=>d.lat).pointLng(d=>d.lng).pointAltitude(0.02).pointRadius(0.35).pointColor(()=>'#ffd166');
-globe.ringsData(places).ringLat(d=>d.lat).ringLng(d=>d.lng).ringColor(()=>'#ffd166').ringMaxRadius(3).ringPropagationSpeed(1.5).ringRepeatPeriod(2000);
+// points
+globe.pointsData(places).pointLat(d=>d.lat).pointLng(d=>d.lng).pointAltitude(0.02).pointRadius(0.35).pointColor(()=>'#ff6b3d');
+
+// arcs
+const arcs=[];for(let i=0;i<places.length-1;i++){arcs.push({startLat:places[i].lat,startLng:places[i].lng,endLat:places[i+1].lat,endLng:places[i+1].lng})}
+globe.arcsData(arcs).arcColor(()=>'#ffd166').arcStroke(2.5).arcDashLength(0.6).arcDashGap(0.6).arcDashAnimateTime(1200);
+
+// center on Europe
+globe.pointOfView({lat:52,lng:10,alt:2.5},0);
+
+setTimeout(()=>{const controls=globe.controls();controls.autoRotate=true;controls.autoRotateSpeed=12;controls.enableZoom=false;controls.enablePan=false;controls.enableRotate=false;},500);
+});
 </script>
 </body>
 </html>
