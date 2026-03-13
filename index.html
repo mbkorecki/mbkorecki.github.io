@@ -1,4 +1,4 @@
-<!-- Academic Personal Website with Solid Hover Abstracts, Clickable Publications, Citation Chart Commented, Topic Network Commented -->
+<!-- Academic Personal Website with Solid Hover Abstracts, Clickable Publications -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,12 +30,12 @@ section{margin-top:70px}
 h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
 .card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}
-.paper{margin-bottom:16px;position:relative;border:1px solid #e5e7eb;padding:10px;border-radius:6px;transition:transform .2s}
+.paper{margin-bottom:16px;position:relative;border:1px solid #e5e7eb;padding:10px;border-radius:6px;transition:transform .2s;background:var(--card);z-index:5}
 .paper:hover{transform:scale(1.02)}
 .paper-title{font-weight:600}
 .paper a{text-decoration:none;color:var(--accent)}
 .paper a:hover{text-decoration:underline}
-.abstract{font-size:14px;color:var(--text);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:12px;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.25);transition:opacity .25s;z-index:10}
+.abstract{font-size:14px;color:var(--text);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:12px;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.25);transition:opacity .25s;z-index:100}
 .paper:hover .abstract{opacity:1;pointer-events:auto}
 .timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}
 .timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}
@@ -160,7 +160,7 @@ async function loadPublications(){
       div.className = "paper";
       div.innerHTML = `
         <div class="paper-title"><a href="${p.pub_url}" target="_blank">${p.title}</a></div>
-        <div class="abstract"><strong>Authors:</strong> ${p.authors}<br><strong>Venue:</strong> ${p.venue} (${p.year})<br>${p.abstract ? p.abstract : ""}</div>
+        <div class="abstract" style="background: var(--card);"> <strong>Authors:</strong> ${p.authors}<br><strong>Venue:</strong> ${p.venue} (${p.year})<br>${p.abstract ? p.abstract : ""}</div>
       `;
       container.appendChild(div);
     });
