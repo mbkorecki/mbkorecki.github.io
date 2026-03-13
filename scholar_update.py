@@ -1,48 +1,58 @@
 from scholarly import scholarly
 import json
+import signal
+import sys
 
 scholar_id = "boCYnOcAAAAJ"
 
-author = scholarly.search_author_id(scholar_id)
-author = scholarly.fill(author, sections=["basics","indices","counts","publications"])
+# ---- Hard timeout (90 seconds) ----
+def handler(signum, frame):
+    print("Timeout reached")
+    sys.exit(1)
 
-# stats
-stats = {
-    "citations": author["citedby"],
-    "hindex": author["hindex"],
-    "papers": len(author["publications"])
-}
+signal.signal(signal.SIGALRM, handler)
+signal.alarm(90)
 
-with open("scholar-stats.json","w") as f:
-    json.dump(stats,f,indent=2)
+try:
 
+    author = scholarly.search_author_id(scholar_id)
+    author = scholarly.fill(author, sections=["basics","indices","counts","publications"])
 
-# publications (NO fill() calls)
-pubs = []
+    stats = {
+        "citations": author["citedby"],
+        "hindex": author["hindex"],
+        "papers": len(author["publications"])
+    }
 
-for pub in author["publications"][:20]:
+    with open("scholar-stats.json","w") as f:
+        json.dump(stats,f,indent=2)
 
-    bib = pub["bib"]
+    pubs = []
 
-    pubs.append({
-        "title": bib.get("title",""),
-        "authors": bib.get("author",""),
-        "venue": bib.get("venue",""),
-        "year": bib.get("pub_year","")
-    })
+    for pub in author["publications"][:15]:
+        bib = pub["bib"]
 
+        pubs.append({
+            "title": bib.get("title",""),
+            "authors": bib.get("author",""),
+            "venue": bib.get("venue",""),
+            "year": bib.get("pub_year","")
+        })
 
-with open("publications.json","w") as f:
-    json.dump(pubs,f,indent=2)
+    with open("publications.json","w") as f:
+        json.dump(pubs,f,indent=2)
 
+    years=[]
+    counts=[]
 
-# citation history
-years = []
-counts = []
+    for y,c in author["cites_per_year"].items():
+        years.append(y)
+        counts.append(c)
 
-for y,c in author["cites_per_year"].items():
-    years.append(y)
-    counts.append(c)
+    with open("citations.json","w") as f:
+        json.dump({"years":years,"citations":counts},f,indent=2)
 
-with open("citations.json","w") as f:
-    json.dump({"years":years,"citations":counts},f,indent=2)
+    print("Scholar data updated")
+
+except Exception as e:
+    print("Scholar fetch failed:",e)
