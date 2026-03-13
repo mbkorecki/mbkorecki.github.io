@@ -1,4 +1,4 @@
-<!-- Updated Academic Personal Website with Abstracts and i10-index -->
+<!-- Academic Personal Website with Clickable Publications, Hover Abstracts, i10-index, and Working Charts/Timeline/Network -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,10 +32,13 @@ section{margin-top:70px}
 h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
 .card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}
-.paper{margin-bottom:16px;transition:transform .2s}
+.paper{margin-bottom:16px;position:relative;border:1px solid #e5e7eb;padding:10px;border-radius:6px;transition:transform .2s}
 .paper:hover{transform:scale(1.02)}
 .paper-title{font-weight:600}
-.abstract{font-size:14px;color:var(--muted);margin-top:4px}
+.paper a{text-decoration:none;color:var(--accent)}
+.paper a:hover{text-decoration:underline}
+.abstract{font-size:14px;color:var(--muted);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:8px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:10}
+.paper:hover .abstract{opacity:1;pointer-events:auto}
 .timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}
 .timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}
 .timeline-item.visible{opacity:1;transform:translateY(0)}
@@ -135,7 +138,7 @@ My research investigates how artificial intelligence interacts with complex soci
 <script>
 function toggleTheme(){document.body.classList.toggle("dark")}
 
-// Load Scholar stats from local JSON (i10-index included)
+// Scholar stats
 async function loadScholarStats(){
  try{
   const res = await fetch('scholar-stats.json');
@@ -147,11 +150,11 @@ async function loadScholarStats(){
       <strong>${data.i10index}</strong> i10-index
     </div>
   `;
- }catch(e){console.log('Scholar stats not loaded — run GitHub Action')}
+ }catch(e){console.log('Scholar stats not loaded')}
 }
 loadScholarStats();
 
-// Load publications with abstract, authors, venue, sorted by year descending
+// Publications
 async function loadPublications(){
   try{
     const res = await fetch("publications.json");
@@ -162,11 +165,11 @@ async function loadPublications(){
       const div = document.createElement("div");
       div.className = "paper";
       div.innerHTML = `
-        <div class="paper-title">${p.title}</div>
+        <div class="paper-title"><a href="${p.url}" target="_blank">${p.title}</a></div>
         <div class="abstract">
           <strong>Authors:</strong> ${p.authors}<br>
           <strong>Venue:</strong> ${p.venue} (${p.year})<br>
-          ${p.abstract ? "<strong>Abstract:</strong> " + p.abstract : ""}
+          ${p.abstract ? p.abstract : ""}
         </div>
       `;
       container.appendChild(div);
@@ -175,8 +178,46 @@ async function loadPublications(){
 }
 loadPublications();
 
-/* Citation graph, topic network, globe, and timeline animations remain unchanged */
-</script>
+// Citation chart
+async function loadCitations(){
+ try{
+  const res=await fetch("citations.json");
+  const data=await res.json();
+  new Chart(document.getElementById('citationChart'),{
+   type:'line',
+   data:{labels:data.years,datasets:[{data:data.citations,tension:0.3,borderWidth:3,borderColor:'#1f4c7a'}]},
+   options:{plugins:{legend:{display:false}}}
+  });
+ }catch(e){console.log("citation data missing")}
+}
+loadCitations();
 
+// Topic network
+const nodes=new vis.DataSet([{id:1,label:"AI"},{id:2,label:"Complex Systems"},{id:3,label:"Reinforcement Learning"},{id:4,label:"Algorithmic Governance"},{id:5,label:"Collective Intelligence"},{id:6,label:"Traffic Systems"},{id:7,label:"Societal Impact"}]);
+const edges=new vis.DataSet([{from:1,to:2},{from:1,to:3},{from:1,to:4},{from:2,to:6},{from:4,to:7},{from:5,to:1}]);
+new vis.Network(document.getElementById("topic-network"),{nodes,edges},{physics:{stabilization:false}});
+
+// Timeline animation
+const items=document.querySelectorAll('.timeline-item');
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})});
+items.forEach(i=>observer.observe(i));
+
+// Globe visualization
+const globe=Globe()(document.getElementById('globeViz'))
+.globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
+.backgroundColor('rgba(0,0,0,0)');
+const places=[
+{name:"Netherlands",lat:52.0116,lng:4.3571},
+{name:"Switzerland",lat:47.3769,lng:8.5417},
+{name:"United Kingdom",lat:55.9533,lng:-3.1883},
+{name:"Netherlands (Groningen)",lat:53.2194,lng:6.5665},
+{name:"Japan",lat:35.6762,lng:139.6503}
+];
+const arcs=[];for(let i=0;i<places.length-1;i++){arcs.push({startLat:places[i].lat,startLng:places[i].lng,endLat:places[i+1].lat,endLng:places[i+1].lng});}
+globe.arcsData(arcs).arcColor(()=>'#ff6b3d').arcStroke(3).arcDashLength(0.6).arcDashGap(0.6).arcDashAnimateTime(1800);
+globe.pointsData(places).pointLat(d=>d.lat).pointLng(d=>d.lng).pointAltitude(0.02).pointRadius(0.35).pointColor(()=>'#ffd166');
+globe.ringsData(places).ringLat(d=>d.lat).ringLng(d=>d.lng).ringColor(()=>'#ffd166').ringMaxRadius(3).ringPropagationSpeed(1.5).ringRepeatPeriod(2000);
+
+</script>
 </body>
 </html>
