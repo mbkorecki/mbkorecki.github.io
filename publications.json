@@ -1,92 +1,162 @@
 [
   {
-    "title": "Democracy by design: Perspectives for digitally assisted, participatory upgrades of society",
-    "authors": "",
-    "venue": "",
-    "year": "2023"
-  },
-  {
-    "title": "Participatory resilience: Surviving, recovering and improving together",
-    "authors": "",
-    "venue": "",
-    "year": "2022"
-  },
-  {
-    "title": "Llm voting: Human choices and ai collective decision-making",
-    "authors": "",
-    "venue": "",
-    "year": "2024"
-  },
-  {
-    "title": "Limits of optimization",
-    "authors": "",
-    "venue": "",
-    "year": "2024"
-  },
-  {
-    "title": "Analytically guided reinforcement learning for green IT and fluent traffic",
-    "authors": "",
-    "venue": "",
-    "year": "2022"
-  },
-  {
-    "title": "Adaptability and sustainability of machine learning approaches to traffic signal control",
-    "authors": "",
-    "venue": "",
-    "year": "2022"
-  },
-  {
-    "title": "How well do reinforcement learning approaches cope with disruptions? the case of traffic signal control",
-    "authors": "",
-    "venue": "",
-    "year": "2023"
-  },
-  {
-    "title": "Democratizing traffic control in smart cities",
-    "authors": "",
-    "venue": "",
-    "year": "2024"
-  },
-  {
-    "title": "Deep reinforcement meta-learning and self-organization in complex systems: Applications to traffic signal control",
-    "authors": "",
-    "venue": "",
-    "year": "2023"
-  },
-  {
     "title": "Overcoming the Price of Anarchy by Steering with recommendations",
-    "authors": "",
+    "authors": "Cesare Carissimo and Marcin Korecki and Damian Dailisan",
     "venue": "",
-    "year": "2025"
-  },
-  {
-    "title": "The man behind the curtain: Appropriating fairness in ai",
-    "authors": "",
-    "venue": "",
-    "year": "2024"
-  },
-  {
-    "title": "Capital as Artificial Intelligence",
-    "authors": "",
-    "venue": "",
-    "year": "2024"
-  },
-  {
-    "title": "Dynamic value alignment through preference aggregation of multiple objectives",
-    "authors": "",
-    "venue": "",
-    "year": "2023"
-  },
-  {
-    "title": "aRtificiaL death: learning from stories of failure",
-    "authors": "",
-    "venue": "",
-    "year": "2023"
+    "year": 2025,
+    "abstract": "Varied real world systems such as transportation networks, supply chains and energy grids present coordination problems where many agents must learn to share resources. It is well known that the independent and selfish interactions of agents in these systems may lead to inefficiencies, often referred to as the \u2018Price of Anarchy\u2019. Effective interventions that reduce the Price of Anarchy while preserving individual autonomy are of great interest. In this paper we explore recommender systems as one such intervention mechanism. We start with the Braess Paradox, a congestion game model of a routing problem related to traffic on roads, packets on the internet, and electricity on power grids. Following recent literature, we model the interactions of agents as a repeated game between Q-learners, a common type of reinforcement learning agents. This work introduces the Learning Dynamic Manipulation Problem, where \u2026",
+    "pub_url": "https://www.sciencedirect.com/science/article/pii/S0925231225006654"
   },
   {
     "title": "Mycomobility: Analysis of human transport through a mycorrhizal analogy",
-    "authors": "",
+    "authors": "Marcin Korecki and Victor L Knoop and Serge Hoogendoorn",
     "venue": "",
-    "year": "2025"
+    "year": 2025,
+    "abstract": "The field of transportation research addresses the complexities of a particular sociotechnical system. Its usual focus is on human transportation systems, but non-human systems that effect transportation are also abundant in nature. This paper draws an analogy between modern human transportation systems and mycorrhizal networks (MN), the underground networks formed by fungi and plants for resource transportation. By examining MN, the study aims to extract insights applicable to human transport and to explore potential reciprocal learnings about natural systems. The research emphasizes an interdisciplinary approach that acknowledges both the technical and social dimensions of transport. The primary focus is to propose improvements to human transportation by learning from the natural efficiency of MN, thereby fostering a more holistic understanding and implementation of transport solutions.",
+    "pub_url": "https://www.sciencedirect.com/science/article/pii/S2590198225002970"
+  },
+  {
+    "title": "Does Capital Dream of Artificial Labour?",
+    "authors": "Marcin Korecki and Cesare Carissimo",
+    "venue": "",
+    "year": 2025,
+    "abstract": "This paper investigates the concept of Labour as an expression of \u2018timenergy\u2019 \u2014 a fusion of time and energy \u2014 and its entanglement within the system of Capital. We define Labour as the commodified, quantifiable expansion of timenergy, in contrast to Capital, which is capable of accumulation and abstraction. We explore Labour\u2019s historical evolution, its coercive and alienating nature, and its transformation through automation and artificial intelligence. Using a game-theoretic, agent-based simulation, we model interactions between Capital and Labour in production processes governed by Cobb-Douglas functions. Our results show that despite theoretical symmetry, learning agents disproportionately gravitate toward capital-intensive processes, revealing Capital\u2019s superior organizational influence due to its accumulative capacity. We argue that Capital functions as an artificially alive system animated by the living \u2026",
+    "pub_url": "https://direct.mit.edu/isal/proceedings-abstract/isal2025/37/53/134070"
+  },
+  {
+    "title": "AI needs Biospheric Ethics",
+    "authors": "Marcin Korecki",
+    "venue": "",
+    "year": 2025,
+    "abstract": "The dominant paradigm in AI ethics and value alignment is highly anthropocentric. The focus of these disciplines is strictly on human values which limits the depth and breadth of their insights. Recently, attempts to expand to a sentientist perspective have been initiated. We argue that neither of these outlooks is sufficient to capture the actual complexity of the biosphere and ensure that AI does not damage it. Thus, we propose a new paradigm --- Biospheric AI that assumes an ecocentric perspective. We discuss hypothetical ways in which such an AI might be designed. Moreover, we give directions for research and application of the modern AI models that would be consistent with the biospheric interests. All in all, this work attempts to take first steps towards a comprehensive program of research that focuses on the interactions between AI and the biosphere.",
+    "pub_url": "https://openreview.net/forum?id=yZhVKDW0o0"
+  },
+  {
+    "title": "Llm voting: Human choices and ai collective decision-making",
+    "authors": "Joshua C Yang and Damian Dailisan and Marcin Korecki and Carina I Hausladen and Dirk Helbing",
+    "venue": "",
+    "year": 2024,
+    "abstract": "This paper investigates the voting behaviors of Large Language Models (LLMs), specifically GPT-4 and LLaMA-2, their biases, and how they align with human voting patterns. Our methodology involved using a dataset from a human voting experiment to establish a baseline for human preferences and conducting a corresponding experiment with LLM agents. We observed that the choice of voting methods and the presentation order influenced LLM voting outcomes. We found that varying the persona can reduce some of these biases and enhance alignment with human choices. While the Chain-of-Thought approach did not improve prediction accuracy, it has potential for AI explainability in the voting process. We also identified a trade-off between preference diversity and alignment accuracy in LLMs, influenced by different temperature settings. Our findings indicate that LLMs may lead to less diverse collective outcomes and biased assumptions when used in voting scenarios, emphasizing the need for cautious integration of LLMs into democratic processes.",
+    "pub_url": "https://ojs.aaai.org/index.php/AIES/article/view/31758"
+  },
+  {
+    "title": "Limits of optimization",
+    "authors": "Cesare Carissimo and Marcin Korecki",
+    "venue": "",
+    "year": 2024,
+    "abstract": "Optimization is about finding the best available object with respect to an objective function. Mathematics and quantitative sciences have been highly successful in formulating problems as optimization problems, and constructing clever processes that find optimal objects from sets of objects. As computers have become readily available to most people, optimization and optimized processes play a very broad role in societies. It is not obvious, however, that the optimization processes that work for mathematics and abstract objects should be readily applied to complex and open social systems. In this paper we set forth a framework to understand when optimization is limited, particularly for complex and open social systems.",
+    "pub_url": "https://link.springer.com/article/10.1007/s11023-023-09633-1"
+  },
+  {
+    "title": "Democratizing traffic control in smart cities",
+    "authors": "Marcin Korecki and Damian Dailisan and Joshua Yang and Dirk Helbing",
+    "venue": "",
+    "year": 2024,
+    "abstract": "To improve the performance of systems, optimization has been the prevailing approach in the past. However, the approach faces challenges when multiple goals shall be simultaneously achieved. For illustration, we study a multi-agent system, where agents have a plurality of different, and mutually inconsistent goals. We then allow agents in the system to vote on which traffic signal controllers, which were trained on different goals using deep reinforcement learning, would control the intersection. Taking decisions based on suitable voting procedures turns out to lead to favorable solutions, which perform highly for several goals rather than optimally for one goal and poorly for others. This opens up new opportunities for the management or even self-governance of complex systems that require the consideration and achievement of multiple goals, such as many systems involving humans. Here, we present results for \u2026",
+    "pub_url": "https://www.sciencedirect.com/science/article/pii/S0968090X24000329"
+  },
+  {
+    "title": "The man behind the curtain: Appropriating fairness in ai",
+    "authors": "Marcin Korecki and Guillaume K\u00f6stner and Emanuele Martinelli and Cesare Carissimo",
+    "venue": "",
+    "year": 2024,
+    "abstract": "Our goal in this paper is to establish a set of criteria for understanding the meaning and sources of attributing (un) fairness to AI algorithms. To do so, we first establish that (un) fairness, like other normative notions, can be understood in a proper primary sense and in secondary senses derived by analogy. We argue that AI algorithms cannot be said to be (un) fair in the proper sense due to a set of criteria related to normativity and agency. However, we demonstrate how and why AI algorithms can be qualified as (un) fair by analogy and explore the sources of this (un) fairness and the associated problems of responsibility assignment. We conclude that more user-driven AI approaches could alleviate some of these difficulties.",
+    "pub_url": "https://www.research-collection.ethz.ch/items/599821cf-052e-4a54-8d0a-3669687cd190"
+  },
+  {
+    "title": "Capital as Artificial Intelligence",
+    "authors": "Cesare Carissimo and Marcin Korecki",
+    "venue": "",
+    "year": 2024,
+    "abstract": "We gather many perspectives on Capital and synthesize their commonalities. We provide a characterization of Capital as a historical agential system and propose a model of Capital using tools from computer science. Our model consists of propositions which, if satisfied by a specific grounding, constitute a valid model of Capital. We clarify the manners in which Capital can evolve. We claim that, when its evolution is driven by quantitative optimization processes, Capital can possess qualities of Artificial Intelligence. We find that Capital may not uniquely represent meaning, in the same way that optimization is not intentionally meaningful. We find that Artificial Intelligences like modern day Large Language Models are a part of Capital. We link our readers to a web-interface where they can interact with a part of Capital.",
+    "pub_url": "https://direct.mit.edu/isal/proceedings-abstract/isal2024/36/123465"
+  },
+  {
+    "title": "Biospheric AI",
+    "authors": "Marcin Korecki",
+    "venue": "",
+    "year": 2024,
+    "abstract": "The dominant paradigm in AI ethics and value alignment is highly anthropocentric. The focus of these disciplines is strictly on human values which limits the depth and breadth of their insights. Recently, attempts to expand to a sentientist perspective have been initiated. We argue that neither of these outlooks is sufficient to capture the actual complexity of the biosphere and ensure that AI does not damage it. Thus, we propose a new paradigm -- Biospheric AI that assumes an ecocentric perspective. We discuss hypothetical ways in which such an AI might be designed. Moreover, we give directions for research and application of the modern AI models that would be consistent with the biospheric interests. All in all, this work attempts to take first steps towards a comprehensive program of research that focuses on the interactions between AI and the biosphere.",
+    "pub_url": "https://arxiv.org/abs/2401.17805"
+  },
+  {
+    "title": "Democracy by design: Perspectives for digitally assisted, participatory upgrades of society",
+    "authors": "Dirk Helbing and Sachit Mahajan and Regula H\u00e4nggli Fricker and Andrea Musso and Carina I Hausladen and Cesare Carissimo and Dino Carpentras and Elisabeth Stockinger and Javier Argota Sanchez-Vaquerizo and Joshua C Yang and Mark C Ballandies and Marcin Korecki and Rohit K Dubey and Evangelos Pournaras",
+    "venue": "",
+    "year": 2023,
+    "abstract": "The technological revolution, particularly the availability of more data and more powerful computational tools, has led to the emergence of a new scientific field called \u201cComputational Diplomacy\u201d. Our work tries to define its scope and focuses on a popular subarea of it, namely \u201cDigital Democracy\u201d. In recent years, there has been a surge of interest in using digital technologies to promote more participatory forms of democracy. While there are numerous potential benefits to using digital tools to enhance democracy, significant challenges must be addressed. It is essential to ensure that digital technologies are used in an accessible, equitable, and fair manner rather than reinforcing existing power imbalances. This paper investigates how digital tools can be used to help design more democratic societies by investigating three key research areas: (1) the role of digital technologies for facilitating civic engagement in \u2026",
+    "pub_url": "https://www.sciencedirect.com/science/article/pii/S1877750323001217"
+  },
+  {
+    "title": "How well do reinforcement learning approaches cope with disruptions? the case of traffic signal control",
+    "authors": "Marcin Korecki and Damian Dailisan and Dirk Helbing",
+    "venue": "",
+    "year": 2023,
+    "abstract": "Data-driven and machine-learning-based methods are increasingly used in attempts to master the challenges of the world. But are they really the best approaches to manage complex dynamical systems? Our aim is to gain more insights into this question by studying various popular reinforcement learning methods for traffic signal control, namely in disrupted scenarios characterized by significant, unpredictable variations. The results are expected to be relevant in subject areas ranging from traffic physics to transportation theory, from dynamics in networks to complex systems, from control theory to self-organization, and from adaptive heuristics to machine learning.",
+    "pub_url": "https://ieeexplore.ieee.org/abstract/document/10100954/"
+  },
+  {
+    "title": "Deep reinforcement meta-learning and self-organization in complex systems: Applications to traffic signal control",
+    "authors": "Marcin Korecki",
+    "venue": "",
+    "year": 2023,
+    "abstract": "We studied the ability of deep reinforcement learning and self-organizing approaches to adapt to dynamic complex systems, using the applied example of traffic signal control in a simulated urban environment. We highlight the general limitations of deep learning for control in complex systems, even when employing state-of-the-art meta-learning methods, and contrast it with self-organization-based methods. Accordingly, we argue that complex systems are a good and challenging study environment for developing and improving meta-learning approaches. At the same time, we point to the importance of baselines to which meta-learning methods can be compared and present a self-organizing analytic traffic signal control that outperforms state-of-the-art meta-learning in some scenarios. We also show that meta-learning methods outperform classical learning methods in our simulated environment (around 1.5\u20132\u00d7 improvement, in most scenarios). Our conclusions are that, in order to develop effective meta-learning methods that are able to adapt to a variety of conditions, it is necessary to test them in demanding, complex settings (such as, for example, urban traffic control) and compare them against established methods.",
+    "pub_url": "https://www.mdpi.com/1099-4300/25/7/982"
+  },
+  {
+    "title": "Dynamic value alignment through preference aggregation of multiple objectives",
+    "authors": "Marcin Korecki and Damian Dailisan and Cesare Carissimo",
+    "venue": "",
+    "year": 2023,
+    "abstract": "The development of ethical AI systems is currently geared toward setting objective functions that align with human objectives. However, finding such functions remains a research challenge, while in RL, setting rewards by hand is a fairly standard approach. We present a methodology for dynamic value alignment, where the values that are to be aligned with are dynamically changing, using a multiple-objective approach. We apply this approach to extend Deep -Learning to accommodate multiple objectives and evaluate this method on a simplified two-leg intersection controlled by a switching agent.Our approach dynamically accommodates the preferences of drivers on the system and achieves better overall performance across three metrics (speeds, stops, and waits) while integrating objectives that have competing or conflicting actions.",
+    "pub_url": "https://arxiv.org/abs/2310.05871"
+  },
+  {
+    "title": "aRtificiaL death: learning from stories of failure",
+    "authors": "Marcin Korecki and Cesare Carissimo and Tanner Lund",
+    "venue": "",
+    "year": 2023,
+    "abstract": "Sharing stories, particularly about death, is an important part of many cultures. In light of these known cases of inter-generational knowledge transmission in biological systems, we explore such learning through sharing information (\u201cstories\u201d) about death. A simulated environment with novelty-seeking Q-learning agents allows us to explore the effects of different types of information sharing on the lifespans of individual agents and the ability of inter-generational chains to maximize novelty via exploration. We find that sharing information about death provides a significantly better learning signal than sharing information about random states in the environment. Moreover, sharing shorter stories appears better than sharing longer ones. Sharing stories promotes survival and exploration in subsequent generations. This provides a foundation upon which further exploration of story sharing dynamics between agents \u2026",
+    "pub_url": "https://direct.mit.edu/isal/proceedings-abstract/isal/35/116928"
+  },
+  {
+    "title": "Machine Learning in Complex Systems: The Case of Traffic Signal Control",
+    "authors": "Marcin Korecki",
+    "venue": "",
+    "year": 2023,
+    "abstract": "Artificial intelligence (AI) is a modern field, which coalesced in the middle of the 20th century. Recently, it has experienced a resurgence of interest and many successful scientific breakthroughs have been reported. Along with the scientific successes come economical ones, and it appears that AI-based solutions are becoming tightly integrated with the markets and societies. As this mass adoption becomes a fact, it is of paramount importance to study both, the potential and the limits of AI. Many of the success stories of the field have come from applications of AI to closed systems. However, when AI is deployed in a real-world environment, it needs to be able to deal with what is clearly an open, complex system. Thus, it is the aim of this thesis to study AI methodologies in the context of such complex systems. We focus on a particular paradigm coming from AI research, namely machine learning and, in particular, deep reinforcement learning. As for the complex system, we focus on studying the urban traffic system and the specific problem of traffic signal control. The main interest of our studies is to investigate performance, sustainability, adaptability, resilience and the ability to align with multiple-values exhibited by the current machine learning methods. We find that reinforcement learning solutions, believed to be state of the art, do not always perform better than some analytic, non-learning solutions. Moreover, the sustainability and resilience of such learning solutions, when compared with that of nonlearning ones, is apparently lower. We propose approaches that allow one to improve sustainability, performance, and resilience of learning methods \u2026",
+    "pub_url": "https://www.research-collection.ethz.ch/bitstreams/e7187eaf-e11d-46ed-973f-ce7cf3598f8b/download"
+  },
+  {
+    "title": "Participatory resilience: Surviving, recovering and improving together",
+    "authors": "Sachit Mahajan and Carina I Hausladen and Javier Argota S\u00e1nchez-Vaquerizo and Marcin Korecki and Dirk Helbing",
+    "venue": "",
+    "year": 2022,
+    "abstract": "In the context of urbanization and a growing population, cities and citizens are becoming more exposed and vulnerable to social and environmental changes, ranging from natural disasters like earthquakes and floods to uncertainties caused by issues related to climate change and complex social dynamics or even pandemics. There have been many debates about implementing resilience thinking that allow cities and communities to prepare for possible stresses and shocks. Although there are sets of frameworks aimed at building inclusive resilience strategies fostering participation and engagement, there is limited resilience-related literature on how to conceptualize participation. Through an extensive review of various kinds of publications on resilience, policy documents, and case studies, which emphasize the concepts of participation, coordination, and co-creation, this review explores and investigates how \u2026",
+    "pub_url": "https://www.sciencedirect.com/science/article/pii/S2210670722002633"
+  },
+  {
+    "title": "Analytically guided reinforcement learning for green IT and fluent traffic",
+    "authors": "Marcin Korecki and Dirk Helbing",
+    "venue": "",
+    "year": 2022,
+    "abstract": "This study investigates various methods for autonomous traffic signal control. We look into different types of control methods, including fixed time, adaptive, analytic, and reinforcement learning approaches. Machine learning approaches are compared with the \u201canalytic\u201d approach, which is used as \u201cgold standard\u201d for performance assessment. We find that conventional machine learning approaches are better than the analytic approach, but require a lot more computer power. We, therefore, introduce a novel hybrid method called \u201canalytically guided reinforcement learning\u201d or shorter \u201c -RL\u201d. This approach is implemented in our \u201cGuidedLight agent\u201d and tends to outperform both, classical machine learning and the analytic approach, while largely improving convergence. This method is therefore suited as a \u201cgreen IT\u201d solution that improves environmental impact in a two-fold way: by reducing (i) traffic congestion and (ii \u2026",
+    "pub_url": "https://ieeexplore.ieee.org/abstract/document/9875292/"
+  },
+  {
+    "title": "Adaptability and sustainability of machine learning approaches to traffic signal control",
+    "authors": "Marcin Korecki",
+    "venue": "",
+    "year": 2022,
+    "abstract": "This study investigates how adaptable Machine Learning Traffic Signal control methods are to topological variability. We ask how well can these methods generalize to non-Manhattan-like networks with non-uniform distances between intersections. A Machine Learning method that is highly reliable in various topologies is proposed and compared with state-of-the-art alternatives. Lastly, we analyze the sustainability of different traffic signal control methods based on computational efforts required to achieve convergence and perform training and testing. We show that our method achieves an approximately seven-fold improvement in terms of CO emitted in training over the second-best method.",
+    "pub_url": "https://www.nature.com/articles/s41598-022-21125-3"
+  },
+  {
+    "title": "Balancing Selfishness and Efficiency in Mobile Ad-hoc Networks: An Agent-based Simulation",
+    "authors": "Marcin Korecki and Malvin Gattinger and Rineke Verbrugge",
+    "venue": "",
+    "year": 2020,
+    "abstract": "We study wireless ad-hoc networks from an agent-based perspective. In our model agents with different strategies such as being selfish, tit-for-tat or battery-based compete and cooperate. If only different levels of selfishness are allowed then being selfish is clearly the dominant strategy. However, introduction of more advanced strategies allows to some extent to combat selfishness. In particular we present a battery-based approach and a hybrid of battery-based and tit-for-tat approaches. The findings give hope that the introduction of widely available ad-hoc networks might at some point be possible. Even when users are given full control of their devices, effective strategies allow for the networks overall to be effective and feasible.",
+    "pub_url": "https://research.rug.nl/en/publications/balancing-selfishness-and-efficiency-in-mobile-ad-hoc-networks-an/"
   }
 ]

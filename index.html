@@ -1,303 +1,199 @@
-<!--
-GitHub Pages Repo Structure
-
-/ (repo root)
-  index.html   (this file)
-  publications.json
-  citations.json
-  /.github/workflows/scholar.yml   (GitHub Action to auto-update Scholar data)
-
-Deploy: enable GitHub Pages → Source: main branch root
--->
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marcin Korecki</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-<script src="https://unpkg.com/globe.gl"></script>
-
-<style>
-:root{--accent:#1f4c7a;--bg:#ffffff;--text:#1f2933;--muted:#6b7280;--card:#f6f8fb}
-
-body.dark{--bg:#0f172a;--text:#e5e7eb;--muted:#9ca3af;--card:#1e293b}
-
-body{font-family:Inter,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}
-
-.container{max-width:900px;margin:auto;padding:70px 28px}
-
-nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid #e5e7eb;z-index:100}
-nav .nav-inner{max-width:1000px;margin:auto;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}
-nav a{margin-left:22px;text-decoration:none;color:var(--text);font-size:15px}
-.toggle{cursor:pointer;border:1px solid #ccc;padding:4px 8px;border-radius:4px;font-size:12px}
-
-.hero{padding-top:70px;padding-bottom:30px}
-
-h1{font-size:42px;margin-bottom:6px}
-.subtitle{font-size:19px;color:var(--muted);margin-bottom:18px}
-
-.statement{
-margin-top:25px;
-padding:20px;
-border-left:4px solid var(--accent);
-background:var(--card);
-border-radius:6px;
-font-size:15px;
-}
-
-.buttons a{text-decoration:none;border:1px solid var(--accent);padding:8px 16px;margin-right:10px;color:var(--accent);font-size:14px;border-radius:4px}
-.buttons a:hover{background:var(--accent);color:white}
-
-section{margin-top:70px}
-
-h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
-.card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}
-
-.paper{margin-bottom:16px}
-.paper-title{font-weight:600}
-.abstract{font-size:14px;color:var(--muted)}
-
-.timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}
-.timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}
-.timeline-item.visible{opacity:1;transform:translateY(0)}
-.timeline-year{font-weight:600;color:var(--accent)}
-
-#topic-network{height:420px;border:1px solid #e5e7eb;border-radius:8px}
-
-#globeViz{height:520px}
-
-.news-list{list-style:none;padding:0}
-
-footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}
-
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.3">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #181f26; -webkit-text-stroke: #181f26; background-color: #ffffff}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px 'Helvetica Neue'; color: #181f26; -webkit-text-stroke: #181f26; background-color: #ffffff; min-height: 15.0px}
+    span.s1 {font-kerning: none}
+  </style>
 </head>
-
 <body>
-
-<nav>
-<div class="nav-inner">
-<div><strong>Marcin Korecki</strong></div>
-<div>
-<a href="#research">Research</a>
-<a href="#topics">Topics</a>
-<a href="#publications">Publications</a>
-<a href="#timeline">Timeline</a>
-<a href="#globe">Globe</a>
-<a href="#news">News</a>
-<span class="toggle" onclick="toggleTheme()">theme</span>
-</div>
-</div>
-</nav>
-
-<div class="container hero">
-<h1>Marcin Korecki</h1>
-<div class="subtitle">AI · Complex Systems · Socio‑Technical Systems</div>
-
-<div class="buttons">
-<a href="https://scholar.google.com/citations?user=boCYnOcAAAAJ">Google Scholar</a>
-<a href="mailto:mbkorecki@gmail.com">Email</a>
-</div>
-
-<div class="statement">
-<strong>Research Statement.</strong>
-My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior, governance, and large‑scale coordination. A central goal of my work is developing AI systems that remain robust, transparent, and socially aligned when deployed in real‑world socio‑technical environments.
-</div>
-
-<div id="scholar-stats"></div>
-
-</div>
-
-<div class="container">
-
-<section id="citations">
-<h2>Citation Growth</h2>
-<canvas id="citationChart" height="120"></canvas>
-</section>
-
-<section id="research">
-<h2>Research</h2>
-<div class="grid">
-<div class="card"><h3>AI in Complex Systems</h3><p>Adaptive infrastructure and reinforcement learning in complex networks.</p></div>
-<div class="card"><h3>AI Governance</h3><p>Transparency, fairness, and governance of algorithmic systems.</p></div>
-<div class="card"><h3>Collective Intelligence</h3><p>Human‑AI collaboration in distributed decision environments.</p></div>
-</div>
-</section>
-
-<section id="topics">
-<h2>Research Topic Network</h2>
-<div id="topic-network"></div>
-</section>
-
-<section id="publications">
-<h2>Publications</h2>
-<div id="pub-list"></div>
-</section>
-
-<section id="timeline">
-<h2>Research Timeline</h2>
-<div class="timeline">
-<div class="timeline-item"><div class="timeline-year">2025–present</div>TU Delft — Postdoc</div>
-<div class="timeline-item"><div class="timeline-year">2023–2024</div>ETH Zurich — Postdoc</div>
-<div class="timeline-item"><div class="timeline-year">2023</div>University of Tokyo — Research Exchange</div>
-<div class="timeline-item"><div class="timeline-year">2020–2023</div>ETH Zurich — PhD</div>
-<div class="timeline-item"><div class="timeline-year">2019–2020</div>University of Edinburgh — MSc AI</div>
-<div class="timeline-item"><div class="timeline-year">2016–2019</div>University of Groningen — BSc AI</div>
-</div>
-</section>
-
-<section id="globe">
-<h2>Global Research Trajectory</h2>
-<div id="globeViz"></div>
-</section>
-
-<section id="news">
-<h2>News</h2>
-<ul class="news-list">
-<li>2025 — SNF Postdoc.Mobility Fellowship</li>
-<li>2024 — Invited talk EuroScience Open Forum</li>
-<li>2023 — PhD ETH Zurich</li>
-</ul>
-</section>
-
-<footer>© Marcin Korecki</footer>
-
-</div>
-
-<script>
-
-function toggleTheme(){document.body.classList.toggle("dark")}
-
-/* Scholar stats loaded from local JSON generated by GitHub Action */
-async function loadScholarStats(){
- try{
-  const res = await fetch('scholar-stats.json');
-  const data = await res.json();
-
-  document.getElementById('scholar-stats').innerHTML = `
-  <div style="margin-top:20px;font-size:15px">
-   <strong>${data.citations}</strong> citations · 
-   <strong>${data.hindex}</strong> h-index · 
-   <strong>${data.papers}</strong> publications
-  </div>
-  `;
- }catch(e){
-  console.log('Scholar stats not loaded — run GitHub Action to generate scholar-stats.json');
- }
-}
-
-loadScholarStats();
-
-/* Publications loader */
-async function loadPublications(){
- try{
-  const res=await fetch("publications.json");
-  const papers=await res.json();
-  const container=document.getElementById("pub-list");
-  papers.slice(0,10).forEach(p=>{
-   const div=document.createElement("div");
-   div.className="paper";
-   div.innerHTML=`<div class="paper-title">${p.title}</div><div class="abstract">${p.authors} — ${p.venue} (${p.year})</div>`;
-   container.appendChild(div);
-  });
- }catch(e){console.log("publications.json missing")}
-}
-loadPublications();
-
-/* Citation graph */
-async function loadCitations(){
- try{
-  const res=await fetch("citations.json");
-  const data=await res.json();
-  new Chart(document.getElementById('citationChart'),{
-   type:'line',
-   data:{labels:data.years,datasets:[{data:data.citations,tension:0.3,borderWidth:3}]},
-   options:{plugins:{legend:{display:false}}}
-  });
- }catch(e){console.log("citation data missing")}
-}
-loadCitations();
-
-/* Topic network */
-const nodes=new vis.DataSet([
-{id:1,label:"AI"},{id:2,label:"Complex Systems"},{id:3,label:"Reinforcement Learning"},{id:4,label:"Algorithmic Governance"},{id:5,label:"Collective Intelligence"},{id:6,label:"Traffic Systems"},{id:7,label:"Societal Impact"}
-]);
-
-const edges=new vis.DataSet([
-{from:1,to:2},{from:1,to:3},{from:1,to:4},{from:2,to:6},{from:4,to:7},{from:5,to:1}
-]);
-
-new vis.Network(document.getElementById("topic-network"),{nodes:nodes,edges:edges},{physics:{stabilization:false}});
-
-/* Globe trajectory */
-const globe=Globe()(document.getElementById('globeViz'))
-.globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg')
-.backgroundColor('rgba(0,0,0,0)');
-
-const places=[
-{name:"Netherlands",lat:52.0116,lng:4.3571},
-{name:"Switzerland",lat:47.3769,lng:8.5417},
-{name:"United Kingdom",lat:55.9533,lng:-3.1883},
-{name:"Netherlands (Groningen)",lat:53.2194,lng:6.5665},
-{name:"Japan",lat:35.6762,lng:139.6503}
-];
-
-/* arcs between career locations */
-const arcs=[];
-for(let i=0;i<places.length-1;i++){
- arcs.push({
-  startLat:places[i].lat,
-  startLng:places[i].lng,
-  endLat:places[i+1].lat,
-  endLng:places[i+1].lng
- });
-}
-
-globe
-.arcsData(arcs)
-.arcColor(()=>'#ff6b3d')
-.arcStroke(2.2)
-.arcDashLength(0.6)
-.arcDashGap(0.6)
-.arcDashAnimateTime(1800);
-
-/* glowing markers for countries */
-
-globe
-.pointsData(places)
-.pointLat(d=>d.lat)
-.pointLng(d=>d.lng)
-.pointAltitude(0.02)
-.pointRadius(0.35)
-.pointColor(()=>'#ffd166');
-
-/* animated rings to highlight destinations */
-
-globe
-.ringsData(places)
-.ringLat(d=>d.lat)
-.ringLng(d=>d.lng)
-.ringColor(()=>'#ffd166')
-.ringMaxRadius(3)
-.ringPropagationSpeed(1.5)
-.ringRepeatPeriod(2000);
-
-/* Timeline animation */
-const items=document.querySelectorAll('.timeline-item');
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})});
-items.forEach(i=>observer.observe(i));
-
-</script>
-
+<p class="p1"><span class="s1">&lt;!-- Updated Academic Personal Website with Abstracts and i10-index --&gt;</span></p>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;Marcin Korecki&lt;/title&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;script src="https://unpkg.com/globe.gl"&gt;&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">:root{--accent:#1f4c7a;--bg:#ffffff;--text:#1f2933;--muted:#6b7280;--card:#f6f8fb}</span></p>
+<p class="p1"><span class="s1">body.dark{--bg:#0f172a;--text:#e5e7eb;--muted:#9ca3af;--card:#1e293b}</span></p>
+<p class="p1"><span class="s1">body{font-family:Inter,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}</span></p>
+<p class="p1"><span class="s1">.container{max-width:900px;margin:auto;padding:70px 28px}</span></p>
+<p class="p1"><span class="s1">nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid #e5e7eb;z-index:100}</span></p>
+<p class="p1"><span class="s1">nav .nav-inner{max-width:1000px;margin:auto;padding:18px 28px;display:flex;justify-content:space-between;align-items:center}</span></p>
+<p class="p1"><span class="s1">nav a{margin-left:22px;text-decoration:none;color:var(--text);font-size:15px}</span></p>
+<p class="p1"><span class="s1">.toggle{cursor:pointer;border:1px solid #ccc;padding:4px 8px;border-radius:4px;font-size:12px}</span></p>
+<p class="p1"><span class="s1">.hero{padding-top:70px;padding-bottom:30px}</span></p>
+<p class="p1"><span class="s1">h1{font-size:42px;margin-bottom:6px}</span></p>
+<p class="p1"><span class="s1">.subtitle{font-size:19px;color:var(--muted);margin-bottom:18px}</span></p>
+<p class="p1"><span class="s1">.statement{margin-top:25px;padding:20px;border-left:4px solid var(--accent);background:var(--card);border-radius:6px;font-size:15px}</span></p>
+<p class="p1"><span class="s1">.buttons a{text-decoration:none;border:1px solid var(--accent);padding:8px 16px;margin-right:10px;color:var(--accent);font-size:14px;border-radius:4px}</span></p>
+<p class="p1"><span class="s1">.buttons a:hover{background:var(--accent);color:white}</span></p>
+<p class="p1"><span class="s1">section{margin-top:70px}</span></p>
+<p class="p1"><span class="s1">h2{font-size:25px;margin-bottom:20px;color:var(--accent)}</span></p>
+<p class="p1"><span class="s1">.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}</span></p>
+<p class="p1"><span class="s1">.card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}</span></p>
+<p class="p1"><span class="s1">.paper{margin-bottom:16px;transition:transform .2s}</span></p>
+<p class="p1"><span class="s1">.paper:hover{transform:scale(1.02)}</span></p>
+<p class="p1"><span class="s1">.paper-title{font-weight:600}</span></p>
+<p class="p1"><span class="s1">.abstract{font-size:14px;color:var(--muted);margin-top:4px}</span></p>
+<p class="p1"><span class="s1">.timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}</span></p>
+<p class="p1"><span class="s1">.timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}</span></p>
+<p class="p1"><span class="s1">.timeline-item.visible{opacity:1;transform:translateY(0)}</span></p>
+<p class="p1"><span class="s1">.timeline-year{font-weight:600;color:var(--accent)}</span></p>
+<p class="p1"><span class="s1">#topic-network{height:420px;border:1px solid #e5e7eb;border-radius:8px}</span></p>
+<p class="p1"><span class="s1">#globeViz{height:520px}</span></p>
+<p class="p1"><span class="s1">.news-list{list-style:none;padding:0}</span></p>
+<p class="p1"><span class="s1">footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;nav&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="nav-inner"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;&lt;strong&gt;Marcin Korecki&lt;/strong&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#research"&gt;Research&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#topics"&gt;Topics&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#publications"&gt;Publications&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#timeline"&gt;Timeline&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#globe"&gt;Globe&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="#news"&gt;News&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;span class="toggle" onclick="toggleTheme()"&gt;theme&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/nav&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="container hero"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h1&gt;Marcin Korecki&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="subtitle"&gt;AI · Complex Systems · Socio-Technical Systems&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="buttons"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="https://scholar.google.com/citations?user=boCYnOcAAAAJ"&gt;Google Scholar&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;a href="mailto:mbkorecki@gmail.com"&gt;Email&lt;/a&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="statement"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong&gt;Research Statement.&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior, governance, and large-scale coordination. A central goal of my work is developing AI systems that remain robust, transparent, and socially aligned when deployed in real-world socio-technical environments.</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="scholar-stats"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="container"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="citations"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Citation Growth&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;canvas id="citationChart" height="120"&gt;&lt;/canvas&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="research"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Research&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="grid"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;&lt;h3&gt;AI in Complex Systems&lt;/h3&gt;&lt;p&gt;Adaptive infrastructure and reinforcement learning in complex networks.&lt;/p&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;&lt;h3&gt;AI Governance&lt;/h3&gt;&lt;p&gt;Transparency, fairness, and governance of algorithmic systems.&lt;/p&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;&lt;h3&gt;Collective Intelligence&lt;/h3&gt;&lt;p&gt;Human-AI collaboration in distributed decision environments.&lt;/p&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="topics"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Research Topic Network&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="topic-network"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="publications"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Publications&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="pub-list"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="timeline"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Research Timeline&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2025–present&lt;/div&gt;TU Delft — Postdoc&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2023–2024&lt;/div&gt;ETH Zurich — Postdoc&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2023&lt;/div&gt;University of Tokyo — Research Exchange&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2020–2023&lt;/div&gt;ETH Zurich — PhD&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2019–2020&lt;/div&gt;University of Edinburgh — MSc AI&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timeline-item"&gt;&lt;div class="timeline-year"&gt;2016–2019&lt;/div&gt;University of Groningen — BSc AI&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="globe"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Global Research Trajectory&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div id="globeViz"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;section id="news"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;h2&gt;News&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1">&lt;ul class="news-list"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;li&gt;2025 — SNF Postdoc.Mobility Fellowship&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">&lt;li&gt;2024 — Invited talk EuroScience Open Forum&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">&lt;li&gt;2023 — PhD ETH Zurich&lt;/li&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/section&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;footer&gt;© Marcin Korecki&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p1"><span class="s1">function toggleTheme(){document.body.classList.toggle("dark")}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// Load Scholar stats from local JSON (i10-index included)</span></p>
+<p class="p1"><span class="s1">async function loadScholarStats(){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>try{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const res = await fetch('scholar-stats.json');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const data = await res.json();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>document.getElementById('scholar-stats').innerHTML = `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div style="margin-top:20px;font-size:15px"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;strong&gt;${data.citations}&lt;/strong&gt; citations ·<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;strong&gt;${data.hindex}&lt;/strong&gt; h-index ·<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;strong&gt;${data.i10index}&lt;/strong&gt; i10-index</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span>}catch(e){console.log('Scholar stats not loaded — run GitHub Action')}</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">loadScholarStats();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// Load publications with abstract, authors, venue, sorted by year descending</span></p>
+<p class="p1"><span class="s1">async function loadPublications(){</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>try{</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const res = await fetch("publications.json");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const papers = await res.json();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const container = document.getElementById("pub-list");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>container.innerHTML = "";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>papers.forEach(p =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const div = document.createElement("div");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>div.className = "paper";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>div.innerHTML = `</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="paper-title"&gt;${p.title}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div class="abstract"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;strong&gt;Authors:&lt;/strong&gt; ${p.authors}&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;strong&gt;Venue:&lt;/strong&gt; ${p.venue} (${p.year})&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>${p.abstract ? "&lt;strong&gt;Abstract:&lt;/strong&gt; " + p.abstract : ""}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>`;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>container.appendChild(div);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>} catch(e){ console.log("Failed to load publications:", e); }</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">loadPublications();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">/* Citation graph, topic network, globe, and timeline animations remain unchanged */</span></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
 </body>
 </html>
