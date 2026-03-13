@@ -1,4 +1,4 @@
-<!-- Academic Personal Website with Hover Abstracts Fixed, Clickable Publications, Citation Chart Commented Out -->
+<!-- Academic Personal Website with Solid Hover Abstracts, Clickable Publications, Citation Chart Commented, Topic Network Commented -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,13 +35,13 @@ h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
 .paper-title{font-weight:600}
 .paper a{text-decoration:none;color:var(--accent)}
 .paper a:hover{text-decoration:underline}
-.abstract{font-size:14px;color:var(--text);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:12px;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:opacity .25s;z-index:10}
+.abstract{font-size:14px;color:var(--text);position:absolute;top:100%;left:0;width:100%;background:var(--card);padding:12px;border-radius:6px;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.25);transition:opacity .25s;z-index:10}
 .paper:hover .abstract{opacity:1;pointer-events:auto}
 .timeline{margin-top:30px;padding-left:25px;border-left:2px solid #e5e7eb}
 .timeline-item{margin-bottom:28px;opacity:0;transform:translateY(20px);transition:all .6s ease}
 .timeline-item.visible{opacity:1;transform:translateY(0)}
 .timeline-year{font-weight:600;color:var(--accent)}
-#topic-network{height:420px;border:1px solid #e5e7eb;border-radius:8px}
+/*#topic-network{height:420px;border:1px solid #e5e7eb;border-radius:8px}*/
 #globeViz{height:520px}
 .news-list{list-style:none;padding:0}
 footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}
@@ -54,7 +54,7 @@ footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14p
 <div><strong>Marcin Korecki</strong></div>
 <div>
 <a href="#research">Research</a>
-<a href="#topics">Topics</a>
+<!-- <a href="#topics">Topics</a> -->
 <a href="#publications">Publications</a>
 <a href="#timeline">Timeline</a>
 <a href="#globe">Globe</a>
@@ -75,7 +75,7 @@ footer{margin-top:90px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14p
 <strong>Research Statement.</strong>
 My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior, governance, and large-scale coordination. A central goal of my work is developing AI systems that remain robust, transparent, and socially aligned when deployed in real-world socio-technical environments.
 </div>
-<div id="scholar-stats"></div>
+<div id="scholar-stats" style="margin-top:0"></div>
 </div>
 
 <div class="container">
@@ -96,10 +96,12 @@ My research investigates how artificial intelligence interacts with complex soci
 </div>
 </section>
 
+<!--
 <section id="topics">
 <h2>Research Topic Network</h2>
 <div id="topic-network"></div>
 </section>
+-->
 
 <section id="publications">
 <h2>Publications</h2>
@@ -142,7 +144,7 @@ async function loadScholarStats(){
  try{
   const res = await fetch('scholar-stats.json');
   const data = await res.json();
-  document.getElementById('scholar-stats').innerHTML = `<div style="margin-top:20px;font-size:15px"><strong>${data.citations}</strong> citations · <strong>${data.hindex}</strong> h-index · <strong>${data.i10index}</strong> i10-index</div>`;
+  document.getElementById('scholar-stats').innerHTML = `<div style="font-size:15px"><strong>${data.citations}</strong> citations · <strong>${data.hindex}</strong> h-index · <strong>${data.i10index}</strong> i10-index</div>`;
  }catch(e){console.log('Scholar stats not loaded')}
 }
 loadScholarStats();
@@ -166,9 +168,7 @@ async function loadPublications(){
 }
 loadPublications();
 
-const nodes=new vis.DataSet([{id:1,label:"AI"},{id:2,label:"Complex Systems"},{id:3,label:"Reinforcement Learning"},{id:4,label:"Algorithmic Governance"},{id:5,label:"Collective Intelligence"},{id:6,label:"Traffic Systems"},{id:7,label:"Societal Impact"}]);
-const edges=new vis.DataSet([{from:1,to:2},{from:1,to:3},{from:1,to:4},{from:2,to:6},{from:4,to:7},{from:5,to:1}]);
-new vis.Network(document.getElementById("topic-network"),{nodes,edges},{physics:{stabilization:false}});
+/* Topic network commented out */
 
 const items=document.querySelectorAll('.timeline-item');
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})});
