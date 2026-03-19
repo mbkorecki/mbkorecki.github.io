@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcin Korecki</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/globe.gl@2.32.0/dist/globe.gl.min.js"></script>
+
+<style>
+:root{--accent:#1f4c7a;--bg:#ffffff;--text:#1f2933;--muted:#6b7280;--card:#f6f8fb}
+body{font-family:Inter,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.7}
+.container{max-width:900px;margin:auto;padding:55px 28px}
+nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid #e5e7eb;z-index:100}
+nav .nav-inner{max-width:1000px;margin:auto;padding:18px 28px;display:flex;justify-content:space-between}
+nav a{margin-left:22px;text-decoration:none;color:var(--text);font-size:15px}
+.hero{position:relative}
+#miniGlobe{position:absolute;right:0;top:10px;width:220px;height:220px;z-index:5}
+h1{font-size:42px;margin-bottom:6px}
+.subtitle{font-size:19px;color:var(--muted);margin-bottom:18px}
+.statement{margin-top:18px;padding:18px;border-left:4px solid var(--accent);background:var(--card);border-radius:6px;font-size:15px}
+section{margin-top:50px}
+h2{font-size:25px;margin-bottom:20px;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px}
+.card{padding:20px;border:1px solid #e5e7eb;border-radius:8px;background:var(--card)}
+.paper{margin-bottom:14px;border:1px solid #e5e7eb;padding:12px;border-radius:6px;background:var(--card);position:relative}
+.paper-title a{font-weight:600;text-decoration:none;color:var(--accent)}
+.paper-title a:hover{text-decoration:underline}
+.abstract{position:absolute;left:0;top:100%;width:100%;background:#ffffff;border:1px solid #ddd;border-radius:6px;padding:14px;box-shadow:0 10px 25px rgba(0,0,0,0.35);opacity:0;pointer-events:none;transition:opacity .2s;z-index:9999}
+.paper:hover .abstract{opacity:1}
+.timeline{margin-top:20px;padding-left:22px;border-left:2px solid #e5e7eb}
+.timeline-item{margin-bottom:22px}
+.timeline-year{font-weight:600;color:var(--accent)}
+footer{margin-top:70px;padding:28px 0;border-top:1px solid #e5e7eb;font-size:14px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+<nav>
+<div class="nav-inner">
+<div><strong>Marcin Korecki</strong></div>
+<div><a href="#research">Research</a><a href="#timeline">Timeline</a><a href="#publications">Publications</a></div>
+</div>
+</nav>
+
+<div class="container hero">
+<div id="miniGlobe"></div>
+<h1>Marcin Korecki</h1>
+<div class="subtitle">AI · Complex Systems · Socio-Technical Systems</div>
+<div class="statement"><strong>Research Statement.</strong> My research investigates how artificial intelligence interacts with complex social and infrastructural systems. I combine machine learning, complex systems science, and philosophy of technology to study how algorithmic decision systems shape collective behavior and governance.</div>
+<div id="scholar-stats"></div>
+</div>
+
+<div class="container">
+<section id="research">
+<h2>Research</h2>
+<div class="grid">
+<div class="card"><h3>AI in Complex Systems</h3><p>Adaptive infrastructure and reinforcement learning in complex networks.</p></div>
+<div class="card"><h3>AI Governance</h3><p>Transparency, fairness, and governance of algorithmic systems.</p></div>
+<div class="card"><h3>Collective Intelligence</h3><p>Human-AI collaboration in distributed decision environments.</p></div>
+</div>
+</section>
+
+<section id="timeline">
+<h2>Research Timeline</h2>
+<div class="timeline">
+<div class="timeline-item"><div class="timeline-year">2025–present</div>TU Delft — Postdoc</div>
+<div class="timeline-item"><div class="timeline-year">2023–2024</div>ETH Zurich — Postdoc</div>
+<div class="timeline-item"><div class="timeline-year">2023</div>University of Tokyo — Research Exchange</div>
+<div class="timeline-item"><div class="timeline-year">2020–2023</div>ETH Zurich — PhD</div>
+<div class="timeline-item"><div class="timeline-year">2019–2020</div>University of Edinburgh — MSc AI</div>
+<div class="timeline-item"><div class="timeline-year">2016–2019</div>University of Groningen — BSc AI</div>
+</div>
+</section>
+
+<section id="publications">
+<h2>Publications</h2>
+<div id="pub-list"></div>
+</section>
+
+<footer>© Marcin Korecki</footer>
+
+</div>
+<script>
+async function loadScholarStats(){try{const res=await fetch('scholar-stats.json');const data=await res.json();document.getElementById('scholar-stats').innerHTML=`<div style="margin-top:6px;font-size:15px"><strong>${data.citations}</strong> citations · <strong>${data.hindex}</strong> h-index · <strong>${data.i10index}</strong> i10-index</div>`;}catch(e){console.log('Scholar stats not loaded')}}
+loadScholarStats();
+
+async function loadPublications(){try{const res=await fetch('publications.json');const papers=await res.json();const container=document.getElementById('pub-list');container.innerHTML='';papers.sort((a,b)=>b.year-a.year);papers.forEach(p=>{const div=document.createElement('div');div.className='paper';div.innerHTML=`<div class="paper-title"><a href="${p.pub_url}" target="_blank">${p.title}</a></div><div class="abstract"><strong>Authors:</strong> ${p.authors}<br>${p.abstract || ''}</div>`;container.appendChild(div)})}catch(e){console.log('pub load error',e)}}
+loadPublications();
+
+window.addEventListener('load',()=>{
+const container=document.getElementById('miniGlobe');
+if(!container)return;
+const globe=Globe()(container).width(220).height(220).globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg').backgroundColor('rgba(0,0,0,0)').globeImageUrl('https://unpkg.com/three-globe/example/img/earth-night.jpg');
+
+const places=[
+{lat:52.0116,lng:4.3571},{lat:47.3769,lng:8.5417},{lat:55.9533,lng:-3.1883},{lat:53.2194,lng:6.5665},{lat:35.6762,lng:139.6503}
+];
+
+// points
+globe.pointsData(places).pointLat(d=>d.lat).pointLng(d=>d.lng).pointAltitude(0.02).pointRadius(0.35).pointColor(()=>'#ff6b3d');
+
+// arcs
+const arcs=[];for(let i=0;i<places.length-1;i++){arcs.push({startLat:places[i].lat,startLng:places[i].lng,endLat:places[i+1].lat,endLng:places[i+1].lng})}
+globe.arcsData(arcs).arcColor(()=>'#ffd166').arcStroke(2.5).arcDashLength(0.6).arcDashGap(0.6).arcDashAnimateTime(1200);
+
+// center on Europe
+globe.pointOfView({lat:52,lng:10,alt:2.5},0);
+
+setTimeout(()=>{const controls=globe.controls();controls.autoRotate=true;controls.autoRotateSpeed=12;controls.enableZoom=false;controls.enablePan=false;controls.enableRotate=false;},500);
+});
+</script>
+</body>
+</html>
