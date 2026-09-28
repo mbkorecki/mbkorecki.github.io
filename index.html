@@ -74,7 +74,7 @@ main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
 .k-capitalife .seg{box-shadow:inset 0 0 0 2px #111,inset 0 0 0 5px #d7d2bd,inset 0 0 0 6px #9b1717}
 
 /* panels */
-.panel{width:var(--H);height:var(--H);border:2px solid var(--edge,var(--plain));position:relative;overflow:hidden;
+.panel{width:var(--H);height:var(--H);border:2px solid var(--edge,var(--plain));border-radius:14px;position:relative;overflow:hidden;
   opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
 .panel.on{opacity:1;visibility:visible}
 
@@ -89,8 +89,7 @@ main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
 @keyframes roll{to{top:110%}}
 
 .desc{padding:28px 28px 24px;display:flex;flex-direction:column;background:var(--pbg,var(--panel));color:var(--pink,var(--fg));font-family:var(--pfont,inherit)}
-.desc h2{margin:0 0 .35rem;font-weight:500;font-size:1.6rem;padding-bottom:.35rem;border-bottom:2px solid var(--pacc,currentColor);line-height:1.15}
-.desc .url{font-size:.8rem;opacity:.7;margin:.6rem 0 1.1rem;word-break:break-all}
+.desc h2{margin:0 0 1.1rem;white-space:nowrap;font-weight:500;font-size:1.6rem;padding-bottom:.35rem;border-bottom:2px solid var(--pacc,currentColor);line-height:1.15}
 .desc p{margin:0;line-height:1.6;font-size:1.02rem}
 .desc p.media{margin-top:.7rem;opacity:.75;font-size:.92em}
 .desc a.open{margin-top:auto;align-self:flex-start;color:var(--pacc);border-bottom:2px solid var(--pacc);text-decoration:none;padding:0 2px 2px}
@@ -103,12 +102,12 @@ main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
 /* narrow screens: text panel above, screenshot below, wires from the active line to both */
 .wire{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible;pointer-events:none;display:none}
 .wire polyline{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-.idle{margin:auto;text-align:center;color:var(--muted);font-family:Spectral,Georgia,serif;font-size:1rem;max-width:14rem;line-height:1.5}
 @media (max-width:1240px){
   :root{--P:min(340px,calc(100vw - 48px));--W:min(300px,calc(var(--P) - 44px));--H:340px;--L:40px;--GAP:min(56px,calc(var(--W) * .18))}
   .stage{grid-template-columns:var(--P);gap:52px;justify-content:center}
   .desc{order:1}.hex{order:2;width:var(--W);justify-self:center}.preview{order:3}
   .panel{width:var(--P);height:var(--P);opacity:1;visibility:visible}
+  .stage:not(.open) .panel{display:none}          /* nothing but the hexagram until a line is chosen */
   .desc{padding:22px 22px 20px}.desc p{font-size:.95rem;line-height:1.5}
   .conn{display:none}.wire{display:block}
 }
@@ -127,7 +126,7 @@ main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
   <section class="stage" aria-label="Projects, as the lines of a hexagram">
     <div class="panel preview" id="preview"></div>
     <div class="hex" id="hex"><div class="conn l" id="cl"></div><div class="conn r" id="cr"></div><svg class="wire" aria-hidden="true"><polyline id="wu"/><polyline id="wd"/></svg></div>
-    <div class="panel desc" id="desc"><div class="idle" id="idle"></div></div>
+    <div class="panel desc" id="desc"></div>
   </section>
   <p class="name" id="hexname"></p>
   <nav class="sr-only" aria-label="Projects">
@@ -185,7 +184,12 @@ const ORDER = [PROJECTS[3], null, null, PROJECTS[2], PROJECTS[0], PROJECTS[1]];
 const projAt = {}; ORDER.forEach((p,i)=>{ if(p) projAt[5-i]=p; });
 
 const hex=document.getElementById("hex"), preview=document.getElementById("preview"), desc=document.getElementById("desc");
-const cl=document.getElementById("cl"), cr=document.getElementById("cr");
+const cl=document.getElementById("cl"), cr=document.getElementById("cr"), stage=document.querySelector(".stage");
+function fitTitle(p){                                     // shrink the project name until it fits on one line
+  const h=p.text.querySelector("h2"); h.style.fontSize="";
+  let s=parseFloat(getComputedStyle(h).fontSize);
+  while(h.scrollWidth>h.clientWidth+.5 && s>11){ s-=.5; h.style.fontSize=s+"px"; }
+}
 let active=null;
 
 /* ---------- old-TV static ---------- */
@@ -237,9 +241,8 @@ for(let row=5; row>=0; row--){                            // top line first
     p.el=a;
     p.shot=new Image(); p.shot.className="shot"; p.shot.alt=p.name+" screenshot"; p.shot.src=p.img; preview.appendChild(p.shot);
     p.text=document.createElement("div"); p.text.style.cssText="display:none;flex-direction:column;height:100%";
-    p.text.innerHTML='<h2></h2><div class="url"></div><p></p><p class="media"></p><a class="open">Open project</a>';
+    p.text.innerHTML='<h2></h2><p></p><p class="media"></p><a class="open">Open project</a>';
     p.text.querySelector("h2").textContent=p.name;
-    p.text.querySelector(".url").textContent=p.url.replace("https://","");
     p.text.querySelector("p").innerHTML=p.desc;
     const mp=p.text.querySelector(".media"); if(p.media) mp.textContent=p.media; else mp.remove();
     p.text.querySelector("a").href=p.url;
@@ -258,6 +261,8 @@ preview.append(cv,...overlay.children);
 
 function activate(p){
   if(active===p) return;
+  const first=!stage.classList.contains("open"), top0=first?hex.getBoundingClientRect().top:0;
+  stage.classList.add("open");
   if(active){ active.el.classList.remove("active"); active.shot.style.display="none"; active.shot.style.transform=""; active.text.style.display="none"; }
   active=p; p.el.classList.add("active");
   p.shot.style.display="block"; p.text.style.display="flex";
@@ -266,7 +271,11 @@ function activate(p){
   desc.style.setProperty("--pacc",p.acc); desc.style.setProperty("--pfont",p.font);
   const y=p.el.offsetTop+p.el.offsetHeight/2;
   for(const c of [cl,cr]){ c.style.background=p.wire; c.style.top=(y-1)+"px"; c.classList.add("on"); }
-  document.getElementById("idle").style.display="none";
+  fitTitle(p);
+  if(first && stacked()){                                 // keep the hexagram where it was while the boxes appear around it
+    const d=hex.getBoundingClientRect().top-top0;
+    if(d) window.scrollBy({top:d,left:0,behavior:"instant"});
+  }
   drawWire();
   burst();
 }
@@ -281,9 +290,7 @@ function drawWire(){
   wd.setAttribute("points",`${W},${y} ${W+off},${y} ${W+off},${down}`);
   wu.style.stroke=wd.style.stroke=active.wire;
 }
-addEventListener("resize",drawWire);
-document.getElementById("idle").textContent=matchMedia("(hover:none)").matches?"Tap a line to see what it links to.":"Hover a line to see what it links to.";
-paint(); cv.style.opacity=.4;                             // idle screen before the first line is chosen
+addEventListener("resize",()=>{ if(active) fitTitle(active); drawWire(); });
 </script>
 </body>
 </html>
