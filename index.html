@@ -19,9 +19,9 @@
 html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Spectral,Georgia,serif}
 main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
 
-.intro{max-width:34rem;margin:0 auto clamp(48px,10vh,110px);text-align:center}
-.intro h1{font-weight:300;font-size:clamp(2rem,4vw,2.8rem);margin:0 0 .6rem;letter-spacing:.01em}
-.intro p{margin:0;font-size:1.1rem;line-height:1.6;color:var(--muted)}
+.intro{width:var(--W);max-width:100%;margin:0 auto clamp(48px,10vh,110px);text-align:center}
+.intro h1{font-weight:300;font-size:clamp(1.9rem,4vw,2.4rem);margin:0 0 .6rem;letter-spacing:.01em}
+.intro p{margin:0;font-size:1.02rem;line-height:1.6;color:var(--muted)}
 
 .stage{display:grid;grid-template-columns:var(--H) var(--W) var(--H);gap:40px;justify-content:center;align-items:start}
 .hex{height:var(--H);display:flex;flex-direction:column;justify-content:space-between;position:relative}
@@ -91,7 +91,7 @@ main{max-width:1240px;margin:0 auto;padding:clamp(40px,9vh,96px) 24px 80px}
   <section class="intro">
     <h1>m. b. korecki</h1>
     <!-- EDIT: your short introduction -->
-    <p>academic and artistic projects, mixed media, and unknown purpose. follow a line as above so below.</p>
+    <p>academic and artistic projects, mixed media, mysterious aims. follow a line (as above so below).</p>
   </section>
 
   <section class="stage" aria-label="Projects, as the lines of a hexagram">
@@ -136,7 +136,8 @@ const NAMES = ["","The Creative","The Receptive","Difficulty at the Beginning","
 
 const rnd = n => Math.floor(Math.random()*n);
 const bits = Array.from({length:6},()=>rnd(2));            // index 0 = bottom line
-const num = KW[TRI[bits.slice(3).join("")]][TRI[bits.slice(0,3).join("")]];
+const lowerTri = TRI[bits.slice(0,3).join("")], upperTri = TRI[bits.slice(3).join("")];
+const num = KW[lowerTri][upperTri];                    // rows: lower trigram, columns: upper trigram
 document.getElementById("hexname").textContent = "Hexagram " + num + ", " + NAMES[num];
 
 // fixed layout, top to bottom: Capital Dreams, two plain lines, Powerlines, 2xy, mall
